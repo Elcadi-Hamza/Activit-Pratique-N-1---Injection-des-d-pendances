@@ -18,7 +18,7 @@ https://www.youtube.com/watch?v=vOLqabN-n2k
 Au premier temps, nous avons créé les packages net.hamza.dao, net.hamza.metier et net.hamza.pres.
 Ensuite, nous avons créé l’interface IDao à l’intérieur du package net.hamza.dao.
 puis on ajouter la methode getData()
-```
+```java
 double getData();
 ```
 #### 2. Création d'une implémentation de cette interface 
@@ -30,3 +30,40 @@ public double getData() {
     return 34; // exemple de temperature = 34
 }
 ```
+#### 3. Création de l'interface IMetier avec une méthode calcul
+On créer l'interface IMetier avec la méthode calcule() dans la package net.hamza.metier.
+```java
+double calcul();
+```
+#### 4. Création d'une implémentation de cette interface en utilisant le couplage faible
+On créer la classe MetierImpl qui impliment l'interface IMetier dans la package metier et recreer la methode
+calcul().
+```java
+public double calcul() {
+    double t = dao.getData();
+    double res = t - 273.15;
+    return res;
+}
+```
+Puis on utilise l'interface IDao avec le couplage faible (n'est pas instensier l'attribut)
+```java
+private IDao dao;
+```
+et definis les methodes pour instencier l'attribut dao (injecter dans l'attribut dao un objet d'une class qui impliment l'interface IDao), il'y a 2 façons de faire ça : 
+On utilisant setter et constructeur par défaut: 
+```java
+public MetierImpl () {
+    
+}
+public void setDao(IDao dao) {
+    this.dao = dao;
+}
+```
+ou on utilise le constructeur par paramétre : 
+```java
+public MetierImpl (IDao dao) {
+    this.dao = dao;
+}
+```
+**Remarque : Utilise constructeur par paramétre est mieux et plus optimiser.**
+
