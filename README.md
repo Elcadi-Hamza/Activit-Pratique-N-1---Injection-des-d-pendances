@@ -15,3 +15,4 @@ https://www.youtube.com/watch?v=vOLqabN-n2k
 ---
 ## Partie 1 : (Voir support et vidéo)
 #### 1 - Création de l'interface IDao une méthode getData
+Au premier temps, nous avons créé les packages net.hamza.dao/metier/pres
