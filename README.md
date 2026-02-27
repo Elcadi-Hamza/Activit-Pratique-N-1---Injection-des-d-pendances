@@ -66,4 +66,20 @@ public MetierImpl (IDao dao) {
 }
 ```
 **Remarque : Utilise constructeur par paramétre est mieux et plus optimiser.**
+#### 5. Faire l'injection des dépendances :
+##### a. Par instanciation statique
+On créer la class Pres1 qui va initialiser les objets DaoImpl et MetierImpl
+et puis on faire l'injection des dépendances, on utilisant le constructeur par parametre
+```java
+DaoImpl d = new DaoImpl();
+MetierImpl metier = new MetierImpl(d);
+```
+apres on afficher le resultats 
+```java
+System.out.println("Resultat = "+ metier.calcul());
+```
+![img.png](img.png)
+**Remarque : le probleme de cette methode d'injection est que la class Pres1 est pas feremer á la modification, parce que il y'a un dépandance fort entre la et les classes
+DaoImpl et MetierImpl**
+##### b. Par instanciation dynamique
 
