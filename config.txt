@@ -1,0 +1,2 @@
+net.hamza.dao.DaoImpl
+net.hamza.metier.MetierImpl

@@ -79,7 +79,50 @@ apres on afficher le resultats
 System.out.println("Resultat = "+ metier.calcul());
 ```
 ![img.png](img.png)
-**Remarque : le probleme de cette methode d'injection est que la class Pres1 est pas feremer á la modification, parce que il y'a un dépandance fort entre la et les classes
+<br/>**Remarque : le probleme de cette methode d'injection est que la class Pres1 est pas feremer á la modification, parce que il y'a un dépandance fort entre la et les classes
 DaoImpl et MetierImpl**
 ##### b. Par instanciation dynamique
+Le probleme de l'instaciation statique est que si on'a une nouvelle source de donneées c-a-d DaoImplV2, il faut modifier 
+le fichier Pres1 => c'est déja bon qu'il faut juste modifier une seule class (design pattern factory (class Pres1)) mais c'est
+mieux si on'a pas besoin de modifier le fichier Pres1.
+Aussi la class DaoImplV2 impliment l'interface IDao, et sa methode getData():
+```java
+public double getData() {
+    System.out.println("Version capteur ...");
+    return 120;
+}
+```
+Et si on change la class Pres1 par :
+```java
+DaoImplV2 d = new DaoImplV2();
+```
+En va voir qu'il s'a marche : <br/>
+![img_1.png](img_1.png)
+On créer le class Pres2 qui va fermer a la modification et ouvert a l'extension et puis on créer le fichier de
+configuration config.txt dans la racine de projet. <br/>
+Dans le fichier config.txt on specifier les class qu'on va utiliser
+```text
+net.hamza.dao.DaoImpl
+net.hamza.metier.MetierImpl
+```
+puis lire le fichier via la class Pres2
+````java
+Scanner sc = new Scanner(new File("config.txt"));
+String daoClassName = sc.nextLine();
+Class cDao = Class.forName(daoClassName); //Charge en memoire la class de premier ligne
+IDao dao = (IDao) cDao.newInstance(); // instancier la class Dao avec constructeur par defaut      
+System.out.println(dao.getData());
+````
+Donc il souffit de juste changer le fichier config.txt, et le prgramme va charger les donnes dans un autre source.
+Alors on pass au methode calcul, la deuxieme ligne de fichier config.txt, on ajoute dans la class Pres2
+```java
+String metierClassName = sc.nextLine();
+Class cMetier = Class.forName(metierClassName);
+IMetier metier = (IMetier) cMetier.getConstructor(IDao.class).newInstance(dao); // constructeur par parametre
+System.out.println("Res = " + metier.calcul());
+```
+Remarque : tu peut utiliser constructeur par defaut avec setter au lieu de constructeur par parametre. <br/>
+Maintenant la class Pres2 est totalement fermer a la modification et ouvert a l'extension
 
+##### c. En utilisant le Framework Spring
+Au premier on telecharger les dependencies par ajouter les dans le fichier pom.xml
