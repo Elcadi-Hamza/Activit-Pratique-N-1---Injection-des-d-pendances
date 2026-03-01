@@ -97,7 +97,7 @@ Et si on change la class Pres1 par :
 DaoImplV2 d = new DaoImplV2();
 ```
 En va voir qu'il s'a marche : <br/>
-![img_1.png](img_1.png)
+![img_1.png](img_1.png) <br/>
 On créer le class Pres2 qui va fermer a la modification et ouvert a l'extension et puis on créer le fichier de
 configuration config.txt dans la racine de projet. <br/>
 Dans le fichier config.txt on specifier les class qu'on va utiliser
@@ -125,4 +125,41 @@ Remarque : tu peut utiliser constructeur par defaut avec setter au lieu de const
 Maintenant la class Pres2 est totalement fermer a la modification et ouvert a l'extension
 
 ##### c. En utilisant le Framework Spring
-Au premier on telecharger les dependencies par ajouter les dans le fichier pom.xml
+##### i. Version XML
+Au premier on télécharger les dependances par ajouter les dans le fichier pom.xml
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>7.0.4</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>7.0.4</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>7.0.4</version>
+        <scope>compile</scope>
+    </dependency>
+</dependencies>
+```
+Puis on reload le projet pour obliger maven de télécharger les depandances.<br/>
+et creer un fichier xml spring config.xml dans le dossier java/ressources
+```xml
+<bean id="dao" class="net.hamza.dao.DaoImpl"></bean>
+<bean id="metier" class="net.hamza.metier.MetierImpl">
+    <property name="dao" ref="dao"></property>
+</bean>
+```
+Puis on ajoute la nouvelle classe PresSpringXml qui base sur le nouveau fichier config.xml
+```java
+ApplicationContext springContext = new ClassPathXmlApplicationContext("config.xml");
+IMetier metier = (IMetier) springContext.getBean("metier");
+System.out.println("Res = "+ metier.calcul());
+```
