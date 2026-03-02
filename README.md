@@ -177,4 +177,10 @@ System.out.println("Res = "+metier.calcul());
 ```
 Maintenant si on ajoute la classe DaoImplV2 (c-a-d on ajoute @Component("dao2")), tu va avoir un exception car
 @Autowired injecter automatique un objet de type IDao mais on a 2 classe qui impliment cette interface.
-<br/> dans ce cas on utilise l'annotation @Qualifier("le-nom-de-component-selectionner")
+<br/> dans ce cas on utilise l'annotation @Qualifier("le-nom-de-component-selectionner").
+```java
+@Qualifier("dao")
+// OU
+@Qualifier("dao2")
+```
+## Partie 2 : Mini Projet (Framework Injection des dépendance)
