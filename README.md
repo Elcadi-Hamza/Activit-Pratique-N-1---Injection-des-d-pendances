@@ -163,3 +163,18 @@ ApplicationContext springContext = new ClassPathXmlApplicationContext("config.xm
 IMetier metier = (IMetier) springContext.getBean("metier");
 System.out.println("Res = "+ metier.calcul());
 ```
+##### ii. Version annotations (@)
+Au premier ajouter l'annotation @Component au classe DaoImpl et MetierImpl et 
+@Autowired au attributes de classe MetierImpl juste apres la declaration d'objet
+IDao, pour faire l'injection automatique.
+<br/> Si tu n'a pas ecrit @Autowired dans la classe MetierImpl il va marche ssi 
+elle contient un seul constructeur, si elle a 2 il va génerer un exception.
+<br/> Puis on créer une nouvelle classe PresSpringAnnotation
+```java
+ApplicationContext applicationContext = new AnnotationConfigApplicationContext("net.hamza");
+IMetier metier = applicationContext.getBean(IMetier.class);
+System.out.println("Res = "+metier.calcul());
+```
+Maintenant si on ajoute la classe DaoImplV2 (c-a-d on ajoute @Component("dao2")), tu va avoir un exception car
+@Autowired injecter automatique un objet de type IDao mais on a 2 classe qui impliment cette interface.
+<br/> dans ce cas on utilise l'annotation @Qualifier("le-nom-de-component-selectionner")

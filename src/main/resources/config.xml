@@ -5,7 +5,11 @@
     <bean id="dao" class="net.hamza.dao.DaoImpl"></bean>  <!-- declare an objet dao de class DaoImpl -->
     <!-- <bean id="dao" class="net.hamza.ext.DaoImplV2"></bean> to switch between version DB and capteur-->
     <bean id="metier" class="net.hamza.metier.MetierImpl">
+        <!-- via setter -->
         <property name="dao" ref="dao"></property> <!-- property setter that has the name dao on it (setDao => spring will do it it self so you don't have to put setDao in the name you just put dao) and the ref is the parameter that the setter take in our case an object dao -->
+
+        <!-- via constructeur -->
+        <!-- <constructor-arg ref="dao"></constructor-arg> -->
 
     </bean> <!-- declare an objet metier de class MetierImpl -->
     <!-- it's just like what we did in the class Pres2 we just use the xml version of it and not the txt version -->
